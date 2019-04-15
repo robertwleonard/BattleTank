@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Engine/World.h"
 
 
 // Sets default values for this component's properties
@@ -41,16 +40,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation,
 		HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace);
 
-	auto Time = GetWorld()->GetTimeSeconds();
 
 	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("%f: No aim found"), Time)
 	}
 }
 
